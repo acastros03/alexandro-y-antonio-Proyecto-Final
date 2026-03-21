@@ -10,9 +10,6 @@
 | **Alexandro Castro Serrano** | [@acastros03](https://github.com/acastros03) |
 | **Antonio Contreras Montaña** | [@antoniocm08](https://github.com/antoniocm08) |
 
-> **Centro:** IES Albarregas — Mérida (Badajoz)  
-> **Ciclo:** Administración de Sistemas Informáticos en Red (ASIR 2)  
-> **Curso:** 2024 / 2025
 
 ---
 
