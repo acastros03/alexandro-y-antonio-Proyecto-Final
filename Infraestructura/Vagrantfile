@@ -1,0 +1,134 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "debian/bookworm64"
+  config.vm.boot_timeout = 600
+
+  # Configuracion de recursos por defecto
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "1024"
+    vb.cpus = 1
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--ioapic", "on"]
+  end
+
+  #===========================================================================
+  # CAPA 5: BASES DE DATOS 
+  #===========================================================================
+
+  config.vm.define "Ibe-tech-BD1" do |bd1|
+    bd1.vm.hostname = "Ibe-tech-BD1"
+    bd1.vm.network "private_network", ip: "192.168.5.3", virtualbox__intnet: "red-datos"
+    bd1.vm.network "private_network", ip: "192.168.56.15"
+    bd1.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 2
+    end
+    bd1.vm.provision "shell", path: "Ibe-tech-BD1.sh"
+  end
+
+  config.vm.define "Ibe-tech-BD2" do |bd2|
+    bd2.vm.hostname = "Ibe-tech-BD2"
+    bd2.vm.network "private_network", ip: "192.168.5.2", virtualbox__intnet: "red-datos"
+    bd2.vm.network "private_network", ip: "192.168.56.16"
+    bd2.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 2
+    end
+    # Esperar a que BD1 PRIMARY este listo antes de configurar replicacion
+    bd2.vm.provision "shell", inline: <<-SHELL
+      echo "Esperando a que BD1 PRIMARY este disponible en 192.168.5.3..."
+      for i in $(seq 1 30); do
+        if mysqladmin ping -h 192.168.5.3 -u haproxy_check --connect-timeout=3 &>/dev/null; then
+          echo "BD1 disponible, continuando..."
+          break
+        fi
+        echo "Intento $i/30, esperando 5s..."
+        sleep 5
+      done
+    SHELL
+    bd2.vm.provision "shell", path: "Ibe-tech-BD2.sh"
+  end
+
+  #===========================================================================
+  # CAPA 4: PROXY DE BASES DE DATOS
+  #===========================================================================
+
+  config.vm.define "Ibe-tech-proxy" do |proxy|
+    proxy.vm.hostname = "Ibe-tech-proxy"
+    proxy.vm.network "private_network", ip: "192.168.4.2", virtualbox__intnet: "red-gestion"
+    proxy.vm.network "private_network", ip: "192.168.5.1", virtualbox__intnet: "red-datos"
+    proxy.vm.network "private_network", ip: "192.168.56.14"
+    proxy.vm.provision "shell", path: "Ibe-tech-ProxyBD.sh"
+  end
+
+  #===========================================================================
+  # CAPA 3: SERVIDOR NFS
+  #===========================================================================
+
+  config.vm.define "Ibe-tech-NFS" do |nfs|
+    nfs.vm.hostname = "Ibe-tech-NFS"
+    nfs.vm.network "private_network", ip: "192.168.3.1", virtualbox__intnet: "red-nfs"
+    nfs.vm.network "private_network", ip: "192.168.4.1", virtualbox__intnet: "red-gestion"
+    nfs.vm.network "private_network", ip: "192.168.56.13"
+    nfs.vm.provision "shell", path: "Ibe-tech-NFS.sh"
+  end
+
+  #===========================================================================
+  # CAPA 2: SERVIDORES WEB
+  # Esperan a que NFS este listo antes de arrancar
+  #===========================================================================
+
+  config.vm.define "Ibe-tech-WEB1" do |web1|
+    web1.vm.hostname = "Ibe-tech-WEB1"
+    web1.vm.network "private_network", ip: "192.168.2.2", virtualbox__intnet: "red-web"
+    web1.vm.network "private_network", ip: "192.168.3.3", virtualbox__intnet: "red-nfs"
+    web1.vm.network "private_network", ip: "192.168.56.11"
+    # Esperar a que NFS este completamente levantado antes de provisionar
+    web1.vm.provision "shell", inline: <<-SHELL
+      echo "Esperando a que NFS este disponible..."
+      for i in $(seq 1 30); do
+        if showmount -e 192.168.3.1 &>/dev/null; then
+          echo "NFS disponible, montando..."
+          mount -a
+          break
+        fi
+        echo "Intento $i/30, esperando 5s..."
+        sleep 5
+      done
+    SHELL
+    web1.vm.provision "shell", path: "Ibe-tech-Web1.sh"
+  end
+
+  config.vm.define "Ibe-tech-WEB2" do |web2|
+    web2.vm.hostname = "Ibe-tech-WEB2"
+    web2.vm.network "private_network", ip: "192.168.2.3", virtualbox__intnet: "red-web"
+    web2.vm.network "private_network", ip: "192.168.3.2", virtualbox__intnet: "red-nfs"
+    web2.vm.network "private_network", ip: "192.168.56.12"
+    web2.vm.provision "shell", inline: <<-SHELL
+      echo "Esperando a que NFS este disponible..."
+      for i in $(seq 1 30); do
+        if showmount -e 192.168.3.1 &>/dev/null; then
+          echo "NFS disponible, montando..."
+          mount -a
+          break
+        fi
+        echo "Intento $i/30, esperando 5s..."
+        sleep 5
+      done
+    SHELL
+    web2.vm.provision "shell", path: "Ibe-tech-Web2.sh"
+  end
+
+  #===========================================================================
+  # CAPA 1: BALANCEADOR NGINX 
+  #===========================================================================
+
+  config.vm.define "Ibe-tech-Balanceador" do |bl|
+    bl.vm.hostname = "Ibe-tech-Balanceador"
+    bl.vm.network "private_network", ip: "192.168.1.1", virtualbox__intnet: "red-publica"
+    bl.vm.network "private_network", ip: "192.168.2.1", virtualbox__intnet: "red-web"
+    bl.vm.network "private_network", ip: "192.168.56.10"
+    bl.vm.network "forwarded_port", guest: 80, host: 8081
+    bl.vm.provision "shell", path: "Ibe-tech-BL.sh"
+  end
+
+end
