@@ -1,0 +1,21 @@
+Id_Incidencia,Id_Cliente,Descripcion,Severidad
+1,1,Error al acceder al panel de administración,Alta
+2,1,Lentitud en la carga de informes,Media
+3,2,No se pueden enviar correos electrónicos,Crítica
+4,3,Problema con la actualización de datos,Media
+5,3,Fallo en el módulo de facturación,Alta
+6,4,Error 404 en página de productos,Media
+7,5,Base de datos no responde,Crítica
+8,5,Problemas de conexión intermitente,Baja
+9,6,No funciona el botón de exportar,Media
+10,7,Pérdida de sesión frecuente,Alta
+11,8,Error al subir archivos adjuntos,Media
+12,8,Interfaz desconfigurada en móvil,Baja
+13,9,Sistema de búsqueda no devuelve resultados,Alta
+14,10,Contraseñas no se pueden resetear,Crítica
+15,2,Timeout al generar reportes grandes,Alta
+16,4,Links rotos en el menú principal,Baja
+17,6,Notificaciones no se envían,Media
+18,7,Error al procesar pagos,Crítica
+19,9,Sincronización con API externa falla,Alta
+20,10,Caracteres especiales no se muestran correctamente,Baja

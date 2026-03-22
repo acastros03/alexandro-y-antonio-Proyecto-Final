@@ -1,0 +1,28 @@
+Id_Catalogo,Id_Cliente,Servicio,Descripcion,Precio
+1,1,Consultoría,Asesoramiento estratégico en transformación digital,150.00
+2,1,Auditoría,Revisión de sistemas de información y seguridad,950.00
+3,2,Diseño,Diseño de arquitectura de software empresarial,2500.00
+4,2,Análisis,Análisis de requisitos funcionales y técnicos,600.00
+5,3,Consultoría,Consultoría en optimización de procesos de negocio,1200.00
+6,3,Diseño,Diseño de experiencia de usuario (UX/UI),350.00
+7,4,Auditoría,Auditoría de cumplimiento normativo RGPD,3500.00
+8,5,Análisis,Análisis de datos y business intelligence,1800.00
+9,5,Consultoría,Consultoría en migración a la nube,75.00
+10,6,Diseño,Diseño de base de datos relacional,150.00
+11,6,Auditoría,Auditoría de ciberseguridad y vulnerabilidades,450.00
+12,7,Consultoría,Consultoría en estrategia de e-commerce,2800.00
+13,8,Análisis,Análisis predictivo con machine learning,600.00
+14,8,Diseño,Diseño de API RESTful,800.00
+15,9,Consultoría,Consultoría integral en desarrollo software,4500.00
+16,9,Auditoría,Auditoría de código y calidad del software,120.00
+17,10,Auditoría,Auditoría completa de infraestructura IT,950.00
+18,10,Consultoría,Consultoría en metodologías ágiles,300.00
+19,1,Diseño,Diseño de identidad corporativa digital,350.00
+20,2,Análisis,Análisis de rendimiento de aplicaciones,425.00
+21,3,Consultoría,Consultoría en gestión del cambio tecnológico,780.00
+22,4,Diseño,Diseño de arquitectura cloud native,1650.00
+23,5,Análisis,Análisis de mercado y competencia digital,520.00
+24,7,Auditoría,Auditoría de accesibilidad web WCAG,425.00
+25,9,Análisis,Análisis de riesgos tecnológicos,890.00
+27,11,Diseño,arquitectura,2500.00
+28,11,Consultoría,hola,150.00
