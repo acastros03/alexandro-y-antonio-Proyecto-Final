@@ -86,34 +86,4 @@ Herramientas Bash y Python para administrar las 5 capas desde un único punto:
 
 ---
 
-## 📁 Estructura del Repositorio
-
-```
-alexandro-castro/
-│
-├── 📄 README.md
-├── 📄 documentacion_alexandro_castro.pdf
-│
-├── 📂 documentacion/             → Manual Técnico, Manual de Usuario, propuestas, ERD
-├── 📂 windows-server/            → Proyecto AD, GPOs y estructura de dominio
-├── 📂 active-directory/          → Diseño de Active Directory y OUs
-├── 📂 base-de-datos/             → DDL SQL + memoria del proyecto de BD
-├── 📂 servicios-red/             → Configs de Apache, Nginx y HAProxy
-├── 📂 python-gestor-incidencias/ → interfaz.py, gestor_csv.py, CSVs
-└── 📂 scripts-linux/             → monitor_servicios.sh, backup_mariadb.sh
-```
-
----
-
-## 📚 Documentación
-
-| Documento | Descripción |
-|-----------|-------------|
-| [📋 documentacion_alexandro_castro.pdf](./documentacion_alexandro_castro.pdf) | Índice general con enlaces a todos los documentos y archivos de código del proyecto |
-| [📖 Manual Técnico](./documentacion/Manual_Tecnico_IberoTech.docx) | Arquitectura, configuración y funcionamiento técnico completo |
-| [📗 Manual de Usuario](./documentacion/Manual_Usuario_IberoTech.pdf) | Guía de uso para los empleados de IberoTech |
-| [🗺️ Esquema del Proyecto](./documentacion/Esquema_Proyecto_Final_Alexandro_Castro_Antonio_Contreras.pdf) | Visión general de todos los módulos |
-
----
-
 *Proyecto Final — IES Albarregas · ASIR 2 · 2024/2025*
