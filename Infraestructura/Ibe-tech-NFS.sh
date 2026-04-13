@@ -50,131 +50,889 @@ cat > /var/nfs/shared/index.html <<'EOF'
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infraestructura Ibe-tech</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IberoTech — Ciberseguridad Empresarial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --azul:       #0d2a4a;
+      --azul-med:   #1e3a5f;
+      --azul-claro: #2a5298;
+      --naranja:    #e8621a;
+      --naranja-cl: #f07a38;
+      --teal:       #2da8a0;
+      --gris:       #f4f6f9;
+      --texto:      #1a1a2e;
+    }
+    * { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--texto); background: #fff; }
+    h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
+    /* ── Navbar ── */
+    .navbar { background: var(--azul); padding: 14px 0; }
+    .navbar-brand { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff !important; }
+    .navbar-brand span { color: var(--naranja); }
+    .nav-link { color: rgba(255,255,255,.8) !important; font-weight: 500; transition: color .2s; }
+    .nav-link:hover { color: var(--naranja) !important; }
+    .btn-login { background: var(--naranja); color: #fff !important; border-radius: 6px; padding: 6px 18px; font-weight: 600; transition: background .2s; }
+    .btn-login:hover { background: var(--naranja-cl); }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+    /* ── Hero ── */
+    #hero {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+      min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge { background: rgba(232,98,26,.15); border: 1px solid rgba(232,98,26,.4); color: var(--naranja-cl); border-radius: 50px; padding: 6px 16px; font-size: .85rem; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+    .hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; color: #fff; line-height: 1.15; }
+    .hero-title span { color: var(--naranja); }
+    .hero-sub { color: rgba(255,255,255,.7); font-size: 1.1rem; max-width: 520px; line-height: 1.7; }
+    .btn-hero { background: var(--naranja); color: #fff; border: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: all .2s; }
+    .btn-hero:hover { background: var(--naranja-cl); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,98,26,.35); color: #fff; }
+    .btn-hero-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); padding: 13px 28px; border-radius: 8px; font-weight: 600; transition: all .2s; }
+    .btn-hero-outline:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); }
+    .hero-stats { border-top: 1px solid rgba(255,255,255,.12); padding-top: 36px; margin-top: 36px; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--naranja); }
+    .stat-label { color: rgba(255,255,255,.6); font-size: .85rem; }
+    .hero-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 28px; backdrop-filter: blur(12px); }
+    .hero-card-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.85); font-size: .95rem; }
+    .hero-card-item:last-child { border: none; }
+    .hero-card-icon { width: 36px; height: 36px; background: rgba(232,98,26,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--naranja-cl); font-size: 1rem; flex-shrink: 0; }
 
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
+    /* ── Sección genérica ── */
+    section { padding: 90px 0; }
+    .section-tag { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--naranja); margin-bottom: 10px; }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--azul); }
+    .section-sub { color: #6c757d; font-size: 1.05rem; max-width: 580px; }
 
-        .header h1 {
-            font-size: 3em;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-        }
+    /* ── Servicios ── */
+    #servicios { background: var(--gris); }
+    .srv-card { background: #fff; border-radius: 16px; padding: 36px 28px; height: 100%; border: 1px solid #e8ecf0; transition: all .25s; position: relative; overflow: hidden; }
+    .srv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--azul-claro), var(--teal)); transform: scaleX(0); transition: transform .3s; transform-origin: left; }
+    .srv-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.1); border-color: transparent; }
+    .srv-card:hover::before { transform: scaleX(1); }
+    .srv-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 20px; }
+    .srv-title { font-size: 1.2rem; font-weight: 700; color: var(--azul); margin-bottom: 10px; }
+    .srv-desc { color: #6c757d; font-size: .93rem; line-height: 1.6; margin-bottom: 20px; }
+    .srv-price { display: inline-flex; align-items: baseline; gap: 4px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; padding: 8px 16px; border-radius: 8px; }
+    .srv-price .amount { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; }
+    .srv-price .per { font-size: .8rem; opacity: .8; }
+    .srv-features { list-style: none; padding: 0; margin: 16px 0 0; }
+    .srv-features li { padding: 5px 0; font-size: .88rem; color: #555; display: flex; align-items: center; gap: 8px; }
+    .srv-features li i { color: var(--teal); font-size: .9rem; }
 
-        .header p {
-            font-size: 1.2em;
-            opacity: 0.95;
-        }
+    /* ── Nosotros ── */
+    .about-img-wrap { position: relative; }
+    .about-img-bg { width: 100%; height: 420px; background: linear-gradient(135deg, var(--azul) 0%, var(--teal) 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    .about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--naranja); color: #fff; border-radius: 14px; padding: 18px 22px; font-family: 'Syne', sans-serif; }
+    .about-badge .num { font-size: 2rem; font-weight: 800; display: block; }
+    .about-badge .lbl { font-size: .8rem; opacity: .9; }
+    .about-check { display: flex; gap: 12px; margin-bottom: 14px; }
+    .about-check-icon { width: 24px; height: 24px; background: rgba(45,168,160,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: .75rem; flex-shrink: 0; margin-top: 2px; }
 
-        .arquitectura {
-            background: rgba(255,255,255,0.95);
-            border-radius: 15px;
-            padding: 35px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
+    /* ── Contacto ── */
+    #contacto { background: var(--gris); }
+    .contact-card { background: #fff; border-radius: 20px; padding: 50px 44px; box-shadow: 0 4px 40px rgba(0,0,0,.07); }
+    .form-label { font-weight: 600; font-size: .88rem; color: var(--azul); margin-bottom: 6px; }
+    .form-control, .form-select { border: 1.5px solid #dde3ea; border-radius: 8px; padding: 11px 14px; font-size: .93rem; transition: border-color .2s, box-shadow .2s; }
+    .form-control:focus, .form-select:focus { border-color: var(--azul-claro); box-shadow: 0 0 0 3px rgba(42,82,152,.1); }
+    .btn-enviar { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border: none; padding: 13px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; width: 100%; transition: all .2s; }
+    .btn-enviar:hover { opacity: .9; transform: translateY(-1px); }
+    .contact-info-item { display: flex; gap: 14px; margin-bottom: 24px; }
+    .contact-info-icon { width: 44px; height: 44px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; }
 
-        .arquitectura h2 {
-            color: #667eea;
-            margin-bottom: 25px;
-            text-align: center;
-            font-size: 2em;
-        }
+    /* ── Footer ── */
+    footer { background: var(--azul); color: rgba(255,255,255,.7); padding: 60px 0 30px; }
+    footer h5 { color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 18px; }
+    footer a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .9rem; display: block; margin-bottom: 8px; transition: color .2s; }
+    footer a:hover { color: var(--naranja); }
+    .footer-brand { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .footer-brand span { color: var(--naranja); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); margin-top: 40px; padding-top: 24px; font-size: .85rem; }
+    .social-btn { width: 36px; height: 36px; background: rgba(255,255,255,.08); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); margin-right: 8px; transition: all .2s; }
+    .social-btn:hover { background: var(--naranja); color: #fff; }
 
-        .capa {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 18px;
-            margin: 12px 0;
-            border-radius: 12px;
-            border-left: 5px solid #667eea;
-        }
+    /* ── Modal login ── */
+    .modal-header { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border-radius: 12px 12px 0 0; }
+    .modal-header .btn-close { filter: invert(1); }
+    .modal-content { border-radius: 14px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 700; }
+    .input-group-text { background: var(--gris); border-color: #dde3ea; color: var(--azul-claro); }
+    .btn-ingresar { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; transition: opacity .2s; }
+    .btn-ingresar:hover { opacity: .9; color: #fff; }
+    .login-demo { background: var(--gris); border-radius: 8px; padding: 14px; font-size: .82rem; color: #666; }
+    .login-demo span { font-weight: 700; color: var(--azul); }
 
-        .capa-titulo {
-            font-weight: bold;
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 8px;
-        }
+    /* ── Panel cliente ── */
+    #panel-cliente { display: none; }
+    #panel-admin   { display: none; }
+    .panel-header { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; padding: 28px 0; }
+    .panel-header h2 { font-family: 'Syne', sans-serif; font-weight: 800; margin: 0; }
+    .welcome-badge { background: rgba(255,255,255,.15); border-radius: 50px; padding: 6px 16px; font-size: .85rem; display: inline-block; margin-top: 8px; }
+    .panel-body { background: var(--gris); padding: 50px 0; min-height: 70vh; }
 
-        .capa-detalle {
-            color: #444;
-            font-size: 0.95em;
-            margin: 3px 0;
-        }
-    </style>
+    /* Descarga cliente */
+    .download-card { background: linear-gradient(135deg, var(--azul) 0%, var(--teal) 100%); border-radius: 20px; padding: 44px; color: #fff; }
+    .download-card h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; }
+    .download-card p { opacity: .85; }
+    .btn-download { background: var(--naranja); color: #fff; border: none; padding: 14px 30px; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: all .2s; display: inline-flex; align-items: center; gap: 10px; }
+    .btn-download:hover { background: var(--naranja-cl); transform: translateY(-2px); color: #fff; }
+    .download-feature { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: .9rem; opacity: .9; }
+    .download-feature i { color: var(--naranja-cl); }
+
+    /* Panel admin */
+    .admin-script-card { background: #fff; border-radius: 16px; border: 1px solid #e8ecf0; overflow: hidden; height: 100%; }
+    .admin-script-header { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); padding: 22px 26px; color: #fff; }
+    .admin-script-header h5 { font-family: 'Syne', sans-serif; font-weight: 700; margin: 0; font-size: 1.1rem; }
+    .admin-script-header p { margin: 4px 0 0; opacity: .75; font-size: .85rem; }
+    .admin-script-body { padding: 26px; }
+    .script-action { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
+    .script-action:last-child { border: none; }
+    .script-action-name { font-weight: 600; font-size: .9rem; color: var(--azul); display: flex; align-items: center; gap: 8px; }
+    .script-action-name i { color: var(--teal); }
+    .btn-run { background: var(--azul); color: #fff; border: none; padding: 6px 16px; border-radius: 6px; font-size: .82rem; font-weight: 600; transition: all .2s; }
+    .btn-run:hover { background: var(--azul-claro); color: #fff; }
+    .btn-run-orange { background: var(--naranja); }
+    .btn-run-orange:hover { background: var(--naranja-cl); }
+    .output-area { background: #0d1117; color: #58d68d; font-family: 'Courier New', monospace; font-size: .82rem; border-radius: 8px; padding: 16px; min-height: 120px; max-height: 200px; overflow-y: auto; margin-top: 16px; white-space: pre-wrap; }
+    .output-placeholder { color: #555; font-style: italic; }
+
+    /* Incidencias */
+    .inc-table th { background: var(--azul); color: #fff; font-family: 'Syne', sans-serif; font-size: .85rem; }
+    .inc-table td { font-size: .88rem; vertical-align: middle; }
+    .badge-critica  { background: #dc3545; }
+    .badge-alta     { background: #fd7e14; }
+    .badge-media    { background: #ffc107; color: #000; }
+    .badge-baja     { background: #198754; }
+
+    /* Animaciones */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { animation: fadeUp .6s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+  </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════════════════ NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top" id="navbar-principal">
+  <div class="container">
+    <a class="navbar-brand" href="#" onclick="mostrarPublica()">Ibero<span>Tech</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="bi bi-list text-white fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1 align-items-center" id="nav-publico">
+        <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-login" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">
+            <i class="bi bi-person-fill me-1"></i>Acceder
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto gap-1 align-items-center d-none" id="nav-logueado">
+        <li class="nav-item"><span class="nav-link text-white-50" id="nav-usuario"></span></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-login" href="#" onclick="cerrarSesion()">
+            <i class="bi bi-box-arrow-right me-1"></i>Salir
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ WEB PÚBLICA -->
+<div id="web-publica">
+
+  <!-- HERO -->
+  <section id="inicio" style="padding:0;">
+    <div id="hero">
+      <div class="container position-relative">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <div class="hero-badge fade-up"><i class="bi bi-shield-check me-2"></i>Empresa de Ciberseguridad · Mérida</div>
+            <h1 class="hero-title fade-up delay-1">Protegemos tu empresa en el <span>mundo digital</span></h1>
+            <p class="hero-sub mt-3 fade-up delay-2">Consultoría, auditoría y diseño de infraestructuras seguras para empresas que no pueden permitirse un fallo de seguridad.</p>
+            <div class="d-flex flex-wrap gap-3 mt-4 fade-up delay-3">
+              <a href="#contacto" class="btn btn-hero">Solicitar servicio <i class="bi bi-arrow-right ms-1"></i></a>
+              <a href="#servicios" class="btn btn-hero-outline">Ver servicios</a>
+            </div>
+            <div class="row hero-stats fade-up delay-4">
+              <div class="col-4 text-center">
+                <div class="stat-num">+120</div>
+                <div class="stat-label">Clientes</div>
+              </div>
+              <div class="col-4 text-center">
+                <div class="stat-num">+500</div>
+                <div class="stat-label">Auditorías</div>
+              </div>
+              <div class="col-4 text-center">
+                <div class="stat-num">99%</div>
+                <div class="stat-label">Satisfacción</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 d-none d-lg-block fade-up delay-2">
+            <div class="hero-card">
+              <div class="mb-3 text-white-50" style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Servicios activos</div>
+              <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-clipboard2-data"></i></div>Consultoría de Seguridad Empresarial</div>
+              <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-search"></i></div>Auditoría y Análisis Forense</div>
+              <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-diagram-3"></i></div>Diseño de Infraestructuras Seguras</div>
+              <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-bug"></i></div>Análisis de Vulnerabilidades</div>
+              <div class="mt-4 pt-3 border-top border-white border-opacity-10 d-flex align-items-center gap-3">
+                <div class="d-flex">
+                  <div style="width:32px;height:32px;border-radius:50%;background:#4ade80;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;">✓</div>
+                </div>
+                <div class="text-white-50" style="font-size:.85rem;">Sede en Mérida · Extremadura · España</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="section-tag">Nuestros servicios</div>
+        <h2 class="section-title">¿Qué ofrecemos?</h2>
+        <p class="section-sub mx-auto mt-2">Soluciones de ciberseguridad adaptadas a cada empresa, desde la consultoría hasta la implementación completa.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-clipboard2-data"></i></div>
+            <div class="srv-title">Consultoría</div>
+            <div class="srv-desc">Asesoramiento técnico y normativo para alinear tu empresa con los estándares de seguridad actuales.</div>
+            <ul class="srv-features">
+              <li><i class="bi bi-check-circle-fill"></i>Análisis de riesgos</li>
+              <li><i class="bi bi-check-circle-fill"></i>Cumplimiento normativo</li>
+              <li><i class="bi bi-check-circle-fill"></i>Plan de mejora</li>
+            </ul>
+            <div class="srv-price mt-auto">
+              <span class="amount">1.200</span>
+              <span class="per">€ / proyecto</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-search"></i></div>
+            <div class="srv-title">Auditoría</div>
+            <div class="srv-desc">Análisis y diagnóstico forense de tus sistemas para detectar vulnerabilidades antes que los atacantes.</div>
+            <ul class="srv-features">
+              <li><i class="bi bi-check-circle-fill"></i>Pentesting externo</li>
+              <li><i class="bi bi-check-circle-fill"></i>Análisis forense</li>
+              <li><i class="bi bi-check-circle-fill"></i>Informe detallado</li>
+            </ul>
+            <div class="srv-price mt-auto">
+              <span class="amount">2.500</span>
+              <span class="per">€ / auditoría</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-diagram-3"></i></div>
+            <div class="srv-title">Diseño</div>
+            <div class="srv-desc">Diseño e implementación de infraestructuras seguras desde cero, adaptadas a tu negocio.</div>
+            <ul class="srv-features">
+              <li><i class="bi bi-check-circle-fill"></i>Arquitectura segura</li>
+              <li><i class="bi bi-check-circle-fill"></i>Segmentación de redes</li>
+              <li><i class="bi bi-check-circle-fill"></i>Firewall y DMZ</li>
+            </ul>
+            <div class="srv-price mt-auto">
+              <span class="amount">3.800</span>
+              <span class="per">€ / proyecto</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-bug"></i></div>
+            <div class="srv-title">Análisis</div>
+            <div class="srv-desc">Detección proactiva de vulnerabilidades en tus sistemas con herramientas especializadas.</div>
+            <ul class="srv-features">
+              <li><i class="bi bi-check-circle-fill"></i>Escaneo de puertos</li>
+              <li><i class="bi bi-check-circle-fill"></i>CVE scanning</li>
+              <li><i class="bi bi-check-circle-fill"></i>Recomendaciones</li>
+            </ul>
+            <div class="srv-price mt-auto">
+              <span class="amount">900</span>
+              <span class="per">€ / análisis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOSOTROS -->
+  <section id="nosotros">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <div class="about-img-wrap">
+            <div class="about-img-bg">
+              <div class="text-center text-white px-4">
+                <i class="bi bi-shield-lock" style="font-size:5rem;opacity:.3;"></i>
+                <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-top:16px;opacity:.7;">IberoTech Security</div>
+                <div style="opacity:.5;font-size:.9rem;">Mérida, Extremadura</div>
+              </div>
+            </div>
+            <div class="about-badge">
+              <span class="num">5+</span>
+              <span class="lbl">Años de experiencia</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="section-tag">Sobre nosotros</div>
+          <h2 class="section-title">Expertos en ciberseguridad empresarial</h2>
+          <p class="text-muted mt-3 mb-4">Somos una empresa de ciberseguridad con sede en Mérida especializada en proteger a organizaciones de todos los tamaños frente a amenazas digitales. Nuestro equipo combina experiencia técnica con conocimiento normativo.</p>
+          <div class="about-check">
+            <div class="about-check-icon"><i class="bi bi-check"></i></div>
+            <div><strong>Equipo especializado</strong> — Profesionales certificados con experiencia en entornos reales.</div>
+          </div>
+          <div class="about-check">
+            <div class="about-check-icon"><i class="bi bi-check"></i></div>
+            <div><strong>Metodología probada</strong> — Seguimos los estándares internacionales de seguridad (ISO 27001, ENS).</div>
+          </div>
+          <div class="about-check">
+            <div class="about-check-icon"><i class="bi bi-check"></i></div>
+            <div><strong>Atención personalizada</strong> — Cada cliente tiene un técnico responsable asignado.</div>
+          </div>
+          <div class="about-check">
+            <div class="about-check-icon"><i class="bi bi-check"></i></div>
+            <div><strong>Sede local</strong> — Empresa extremeña comprometida con el tejido empresarial regional.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="container">
+      <div class="text-center mb-5">
+        <div class="section-tag">Contacto</div>
+        <h2 class="section-title">¿Hablamos?</h2>
+        <p class="section-sub mx-auto mt-2">Cuéntanos tu situación y te preparamos una propuesta sin compromiso.</p>
+      </div>
+      <div class="row g-5">
+        <div class="col-lg-7">
+          <div class="contact-card">
+            <form id="formContacto" onsubmit="enviarContacto(event)">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label">Nombre <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c-nombre" placeholder="Tu nombre" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Empresa <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c-empresa" placeholder="Nombre de tu empresa" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">CIF <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="c-cif" placeholder="B12345678" required/>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Teléfono <span class="text-danger">*</span></label>
+                  <input type="tel" class="form-control" id="c-telefono" placeholder="600 000 000" required/>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Correo electrónico <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="c-email" placeholder="empresa@ejemplo.com" required/>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Servicio de interés</label>
+                  <select class="form-select" id="c-servicio">
+                    <option value="">Seleccionar servicio...</option>
+                    <option value="Consultoría">Consultoría — 1.200 €</option>
+                    <option value="Auditoría">Auditoría — 2.500 €</option>
+                    <option value="Diseño">Diseño de infraestructura — 3.800 €</option>
+                    <option value="Análisis">Análisis de vulnerabilidades — 900 €</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Mensaje <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="c-mensaje" rows="4" placeholder="Cuéntanos tu situación..." required></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-enviar">
+                    <i class="bi bi-send me-2"></i>Enviar solicitud
+                  </button>
+                </div>
+              </div>
+            </form>
+            <div id="contacto-ok" class="alert alert-success mt-3 d-none">
+              <i class="bi bi-check-circle me-2"></i><strong>¡Solicitud enviada!</strong> Te hemos mandado un correo de confirmación. Un técnico se pondrá en contacto contigo en breve.
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <div class="fw-700" style="font-weight:700;">Sede</div>
+              <div class="text-muted">Mérida, Extremadura, España</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <div style="font-weight:700;">Email</div>
+              <div class="text-muted">contacto@iberotech.es</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <div style="font-weight:700;">Teléfono</div>
+              <div class="text-muted">+34 924 000 000</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-icon"><i class="bi bi-clock-fill"></i></div>
+            <div>
+              <div style="font-weight:700;">Horario</div>
+              <div class="text-muted">Lun–Vie: 8:00 – 18:00</div>
+            </div>
+          </div>
+          <div class="mt-4 p-4 rounded-3" style="background:linear-gradient(135deg,var(--azul),var(--teal));color:#fff;">
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:8px;">
+              <i class="bi bi-shield-check me-2"></i>¿Primera consulta?
+            </div>
+            <div style="font-size:.9rem;opacity:.85;">La primera consulta es gratuita y sin compromiso. Analizamos tu situación y te proponemos la mejor solución.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- fin web-publica -->
+
+
+<!-- ═══════════════════════════════════════════════════════ PANEL CLIENTE -->
+<div id="panel-cliente">
+  <div class="panel-header">
+    <div class="container">
+      <h2><i class="bi bi-person-circle me-2"></i>Portal del Cliente</h2>
+      <div class="welcome-badge" id="cliente-nombre-bienvenida"></div>
+    </div>
+  </div>
+  <div class="panel-body">
     <div class="container">
 
-        <div class="header">
-            <h1>Infraestructura Ibe-tech</h1>
+      <!-- Descarga -->
+      <div class="row mb-5">
+        <div class="col-12">
+          <div class="download-card">
+            <div class="row align-items-center">
+              <div class="col-lg-7">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div style="width:56px;height:56px;background:rgba(255,255,255,.15);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;">🛡️</div>
+                  <div>
+                    <h3 class="mb-0">IberoTech Security Scanner</h3>
+                    <div style="opacity:.7;font-size:.9rem;">Herramienta de escaneo de puertos para Windows</div>
+                  </div>
+                </div>
+                <p>Descarga nuestra herramienta de seguridad gratuita para analizar los puertos de tu equipo, detectar vulnerabilidades y gestionar tu firewall de Windows con un solo clic.</p>
+                <div class="download-feature"><i class="bi bi-check-circle-fill"></i>Escaneo de puertos con detección de riesgos</div>
+                <div class="download-feature"><i class="bi bi-check-circle-fill"></i>Bloqueo automático de puertos peligrosos</div>
+                <div class="download-feature"><i class="bi bi-check-circle-fill"></i>Exportación de informe en PDF</div>
+                <div class="download-feature"><i class="bi bi-check-circle-fill"></i>No requiere instalación adicional de Python</div>
+              </div>
+              <div class="col-lg-5 text-center mt-4 mt-lg-0">
+                <div style="background:rgba(255,255,255,.1);border-radius:16px;padding:32px;">
+                  <div style="font-size:4rem;margin-bottom:16px;">💻</div>
+                  <div style="font-weight:700;font-size:1.1rem;margin-bottom:4px;">Windows 10 / 11</div>
+                  <div style="opacity:.7;font-size:.85rem;margin-bottom:20px;">Requiere Nmap instalado · Ejecutar como administrador</div>
+                  <a href="iberotech_scanner.exe" download class="btn btn-download">
+                    <i class="bi bi-download"></i> Descargar .exe
+                  </a>
+                  <div style="opacity:.6;font-size:.78rem;margin-top:12px;">También incluye manual de usuario en PDF</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="arquitectura">
-            <h2>Arquitectura de Red - 5 Capas</h2>
-
-            <div class="capa">
-                <div class="capa-titulo">Capa 1: Balanceador de Carga (Nginx)</div>
-                <div class="capa-detalle">• Hostname: Ibe-tech-Balanceador</div>
-                <div class="capa-detalle">• IP Pública: 192.168.1.1</div>
-                <div class="capa-detalle">• IP Privada: 192.168.2.1</div>
-                <div class="capa-detalle">• Función: Distribuye tráfico HTTP entre servidores web</div>
-            </div>
-
-            <div class="capa">
-                <div class="capa-titulo">Capa 2: Servidores Web (Apache + PHP)</div>
-                <div class="capa-detalle">• Web Server 1: Ibe-tech-WEB1 (192.168.2.2 → 192.168.3.3)</div>
-                <div class="capa-detalle">• Web Server 2: Ibe-tech-WEB2 (192.168.2.3 → 192.168.3.2)</div>
-                <div class="capa-detalle">• Función: Procesamiento de aplicaciones web PHP</div>
-            </div>
-
-            <div class="capa">
-                <div class="capa-titulo">Capa 3: Servidor de Archivos (NFS)</div>
-                <div class="capa-detalle">• Hostname: Ibe-tech-NFS</div>
-                <div class="capa-detalle">• IP Web: 192.168.3.1</div>
-                <div class="capa-detalle">• IP Proxy: 192.168.4.1</div>
-                <div class="capa-detalle">• Función: Almacenamiento compartido de archivos</div>
-            </div>
-
-            <div class="capa">
-                <div class="capa-titulo">Capa 4: Balanceador de BD (HAProxy)</div>
-                <div class="capa-detalle">• Hostname: Ibe-tech-proxy</div>
-                <div class="capa-detalle">• IP NFS: 192.168.4.2</div>
-                <div class="capa-detalle">• IP BD: 192.168.5.1</div>
-                <div class="capa-detalle">• Función: Balanceo y alta disponibilidad de consultas SQL</div>
-            </div>
-
-            <div class="capa">
-                <div class="capa-titulo">Capa 5: Bases de Datos (MariaDB)</div>
-                <div class="capa-detalle">• BD Primary: Ibe-tech-BD1 (192.168.5.3)</div>
-                <div class="capa-detalle">• BD Secondary: Ibe-tech-BD2 (192.168.5.2)</div>
-                <div class="capa-detalle">• Función: Almacenamiento persistente con replicación</div>
-            </div>
+      <!-- Mis servicios -->
+      <div class="row g-4 mb-4">
+        <div class="col-12">
+          <h4 style="font-family:'Syne',sans-serif;font-weight:700;color:var(--azul);">Mis servicios contratados</h4>
         </div>
+        <div class="col-md-4">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-search"></i></div>
+            <div class="srv-title">Auditoría</div>
+            <div class="srv-desc">Auditoría de seguridad completa de la infraestructura.</div>
+            <span class="badge bg-success">Activo</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="srv-card">
+            <div class="srv-icon"><i class="bi bi-bug"></i></div>
+            <div class="srv-title">Análisis de vulnerabilidades</div>
+            <div class="srv-desc">Escaneo continuo de vulnerabilidades en sistemas.</div>
+            <span class="badge bg-warning text-dark">En progreso</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mis incidencias -->
+      <div class="row">
+        <div class="col-12">
+          <h4 style="font-family:'Syne',sans-serif;font-weight:700;color:var(--azul);" class="mb-3">Mis incidencias</h4>
+          <div class="bg-white rounded-4 overflow-hidden shadow-sm">
+            <table class="table inc-table mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th><th>Descripción</th><th>Severidad</th><th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>#001</td><td>Puerto 445 SMB expuesto en servidor principal</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge bg-warning text-dark">En progreso</span></td></tr>
+                <tr><td>#002</td><td>Certificado SSL caducado en subdominio</td><td><span class="badge badge-media">Media</span></td><td><span class="badge bg-success">Resuelta</span></td></tr>
+                <tr><td>#003</td><td>Contraseñas débiles en cuentas de usuario</td><td><span class="badge badge-baja">Baja</span></td><td><span class="badge bg-secondary">Cerrada</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
     </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ PANEL ADMIN -->
+<div id="panel-admin">
+  <div class="panel-header">
+    <div class="container">
+      <h2><i class="bi bi-gear-fill me-2"></i>Panel de Administración</h2>
+      <div class="welcome-badge">IberoTech — Control total de la infraestructura</div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="container">
+      <div class="row g-4">
+
+        <!-- Script 1: Gestor GUI - Monitor infraestructura -->
+        <div class="col-lg-6">
+          <div class="admin-script-card">
+            <div class="admin-script-header">
+              <h5><i class="bi bi-display me-2"></i>Monitor de Infraestructura</h5>
+              <p>gestor_gui.py — Monitorización y gestión de los servidores</p>
+            </div>
+            <div class="admin-script-body">
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-activity"></i>Estado de los servidores</div>
+                <button class="btn btn-run" onclick="simularScript('output-gui','estado')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-file-text"></i>Ver logs</div>
+                <button class="btn btn-run" onclick="simularScript('output-gui','logs')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-globe"></i>Actualizar contenido web</div>
+                <button class="btn btn-run" onclick="simularScript('output-gui','web')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-database-fill-down"></i>Backup de emergencia</div>
+                <button class="btn btn-run btn-run-orange" onclick="simularScript('output-gui','backup')">Ejecutar</button>
+              </div>
+              <div class="output-area" id="output-gui"><span class="output-placeholder">// Selecciona una acción para ejecutar el script...</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Script 2: Gestor CSV - Incidencias -->
+        <div class="col-lg-6">
+          <div class="admin-script-card">
+            <div class="admin-script-header">
+              <h5><i class="bi bi-people-fill me-2"></i>Gestión de Clientes e Incidencias</h5>
+              <p>gestor_csv.py — Clientes, incidencias y servicios</p>
+            </div>
+            <div class="admin-script-body">
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-list-ul"></i>Ver todos los clientes</div>
+                <button class="btn btn-run" onclick="simularScript('output-csv','clientes')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-search"></i>Buscar cliente/incidencia</div>
+                <button class="btn btn-run" onclick="simularScript('output-csv','buscar')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-person-plus"></i>Agregar cliente</div>
+                <button class="btn btn-run" onclick="simularScript('output-csv','agregar')">Ejecutar</button>
+              </div>
+              <div class="script-action">
+                <div class="script-action-name"><i class="bi bi-exclamation-triangle"></i>Ver incidencias activas</div>
+                <button class="btn btn-run btn-run-orange" onclick="simularScript('output-csv','incidencias')">Ejecutar</button>
+              </div>
+              <div class="output-area" id="output-csv"><span class="output-placeholder">// Selecciona una acción para ejecutar el script...</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabla resumen clientes -->
+        <div class="col-12">
+          <div class="admin-script-card">
+            <div class="admin-script-header">
+              <h5><i class="bi bi-table me-2"></i>Resumen de Clientes e Incidencias</h5>
+              <p>Datos cargados desde Clientes.csv e Incidencias.csv</p>
+            </div>
+            <div class="admin-script-body p-0">
+              <table class="table inc-table mb-0">
+                <thead>
+                  <tr><th>ID</th><th>Cliente</th><th>CIF</th><th>Teléfono</th><th>Incidencias</th><th>Acciones</th></tr>
+                </thead>
+                <tbody id="tabla-clientes-admin">
+                  <tr><td>1</td><td>Empresa Ejemplo SL</td><td>B12345678</td><td>600 111 222</td><td><span class="badge badge-alta">2 activas</span></td><td><button class="btn btn-sm btn-run">Ver</button></td></tr>
+                  <tr><td>2</td><td>Tech Solutions SA</td><td>A87654321</td><td>610 333 444</td><td><span class="badge badge-baja">0 activas</span></td><td><button class="btn btn-sm btn-run">Ver</button></td></tr>
+                  <tr><td>3</td><td>Comercial Norte CB</td><td>E11223344</td><td>620 555 666</td><td><span class="badge badge-media">1 activa</span></td><td><button class="btn btn-sm btn-run">Ver</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ FOOTER -->
+<footer id="footer-principal">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-3">Ibero<span>Tech</span></div>
+        <p style="font-size:.9rem;line-height:1.7;">Empresa de ciberseguridad con sede en Mérida, Extremadura. Protegemos tu empresa en el mundo digital.</p>
+        <div class="mt-3">
+          <a href="#" class="social-btn"><i class="bi bi-linkedin"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="social-btn"><i class="bi bi-github"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h5>Servicios</h5>
+        <a href="#servicios">Consultoría</a>
+        <a href="#servicios">Auditoría</a>
+        <a href="#servicios">Diseño</a>
+        <a href="#servicios">Análisis</a>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h5>Empresa</h5>
+        <a href="#nosotros">Sobre nosotros</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#">Política de privacidad</a>
+      </div>
+      <div class="col-lg-4">
+        <h5>Contacto</h5>
+        <p style="font-size:.9rem;"><i class="bi bi-geo-alt me-2" style="color:var(--naranja);"></i>Mérida, Extremadura, España</p>
+        <p style="font-size:.9rem;"><i class="bi bi-envelope me-2" style="color:var(--naranja);"></i>contacto@iberotech.es</p>
+        <p style="font-size:.9rem;"><i class="bi bi-telephone me-2" style="color:var(--naranja);"></i>+34 924 000 000</p>
+      </div>
+    </div>
+    <div class="footer-bottom d-flex flex-wrap justify-content-between">
+      <span>© 2025 IberoTech · Todos los derechos reservados</span>
+      <span>Mérida, Extremadura · España</span>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════ MODAL LOGIN -->
+<div class="modal fade" id="modalLogin" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Acceder a IberoTech</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form onsubmit="login(event)">
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <input type="text" class="form-control" id="login-user" placeholder="Tu usuario" required/>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" class="form-control" id="login-pass" placeholder="Tu contraseña" required/>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-ingresar">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
+          </button>
+        </form>
+        <div id="login-error" class="alert alert-danger mt-3 d-none">
+          <i class="bi bi-exclamation-triangle me-2"></i>Usuario o contraseña incorrectos.
+        </div>
+        <div class="login-demo mt-4">
+          <div class="mb-1"><span>Cliente:</span> usuario <code>cliente</code> / contraseña <code>cliente123</code></div>
+          <div><span>Admin:</span> usuario <code>admin</code> / contraseña <code>admin123</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Usuarios demo ────────────────────────────────────────────────────────────
+const USUARIOS = {
+  'cliente': { pass: 'cliente123', rol: 'cliente', nombre: 'Empresa Ejemplo SL' },
+  'admin':   { pass: 'admin123',   rol: 'admin',   nombre: 'Administrador' },
+};
+
+// ── Login ────────────────────────────────────────────────────────────────────
+function login(e) {
+  e.preventDefault();
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const err  = document.getElementById('login-error');
+
+  if (USUARIOS[user] && USUARIOS[user].pass === pass) {
+    err.classList.add('d-none');
+    bootstrap.Modal.getInstance(document.getElementById('modalLogin')).hide();
+    const u = USUARIOS[user];
+    activarPanel(u.rol, u.nombre);
+  } else {
+    err.classList.remove('d-none');
+  }
+}
+
+function activarPanel(rol, nombre) {
+  // Ocultar web pública y footer
+  document.getElementById('web-publica').style.display = 'none';
+  document.getElementById('footer-principal').style.display = 'none';
+  document.getElementById('panel-cliente').style.display = 'none';
+  document.getElementById('panel-admin').style.display = 'none';
+
+  // Nav
+  document.getElementById('nav-publico').classList.add('d-none');
+  document.getElementById('nav-logueado').classList.remove('d-none');
+  document.getElementById('nav-usuario').textContent = '👤 ' + nombre;
+
+  if (rol === 'cliente') {
+    document.getElementById('panel-cliente').style.display = 'block';
+    document.getElementById('cliente-nombre-bienvenida').textContent = 'Bienvenido, ' + nombre;
+  } else {
+    document.getElementById('panel-admin').style.display = 'block';
+  }
+  window.scrollTo(0, 0);
+}
+
+function cerrarSesion() {
+  document.getElementById('web-publica').style.display = 'block';
+  document.getElementById('footer-principal').style.display = 'block';
+  document.getElementById('panel-cliente').style.display = 'none';
+  document.getElementById('panel-admin').style.display = 'none';
+  document.getElementById('nav-publico').classList.remove('d-none');
+  document.getElementById('nav-logueado').classList.add('d-none');
+  window.scrollTo(0, 0);
+}
+
+function mostrarPublica() {
+  document.getElementById('web-publica').style.display = 'block';
+  document.getElementById('footer-principal').style.display = 'block';
+  document.getElementById('panel-cliente').style.display = 'none';
+  document.getElementById('panel-admin').style.display = 'none';
+}
+
+// ── Formulario contacto ───────────────────────────────────────────────────────
+function enviarContacto(e) {
+  e.preventDefault();
+  document.getElementById('formContacto').classList.add('d-none');
+  document.getElementById('contacto-ok').classList.remove('d-none');
+}
+
+// ── Simulación scripts admin ─────────────────────────────────────────────────
+const OUTPUTS = {
+  estado:  `[✓] Ibe-tech-Balanceador  192.168.1.1   nginx     ONLINE
+[✓] Ibe-tech-WEB1         192.168.2.2   apache2   ONLINE
+[✓] Ibe-tech-WEB2         192.168.2.3   apache2   ONLINE
+[✓] Ibe-tech-NFS          192.168.3.1   nfs       ONLINE
+[✓] Ibe-tech-proxy        192.168.4.2   haproxy   ONLINE
+[✓] Ibe-tech-BD1          192.168.5.3   mariadb   ONLINE (PRIMARY)
+[✓] Ibe-tech-BD2          192.168.5.2   mariadb   ONLINE (REPLICA)
+
+Todos los servidores operativos. [7/7]`,
+  logs:    `[WEB1] 192.168.2.2 - - [08/Apr/2025 10:21:03] "GET / HTTP/1.1" 200 4521
+[WEB2] 192.168.2.3 - - [08/Apr/2025 10:21:04] "GET / HTTP/1.1" 200 4521
+[BL]   192.168.1.1 error.log: No hay errores recientes
+[BD1]  192.168.5.3 mysql error.log: InnoDB: Shutdown completed OK`,
+  web:     `Seleccionando archivo HTML...
+Subiendo a NFS /var/nfs/shared/index.html...
+[✓] Archivo subido correctamente.
+[✓] Permisos aplicados (644).
+[✓] Contenido visible en WEB1 y WEB2.`,
+  backup:  `Iniciando backup de emergencia...
+Conectando a Ibe-tech-BD1 (192.168.5.3)...
+[✓] mysqldump completado: ibe_tech_db_20250408.sql
+[✓] Transferido a NFS /var/nfs/shared/backups/
+[✓] Backups de más de 7 días eliminados.
+Backup finalizado correctamente.`,
+  clientes:`■■■■■■■■■■■■ GESTIÓN DE CLIENTES ■■■■■■■■■■■■
+NOMBRE                    | CIF         
+----------------------------------------
+Empresa Ejemplo SL        | B12345678   
+Tech Solutions SA         | A87654321   
+Comercial Norte CB        | E11223344   
+3 clientes registrados.`,
+  buscar:  `Buscando...
+■■ RESULTADO ■■
+ID: 1 | NOMBRE: Empresa Ejemplo SL
+CIF: B12345678 | TEL: 600 111 222
+INCIDENCIAS (2):
+  🔴 [Alta] Puerto 445 SMB expuesto
+  🟡 [Media] Certificado SSL caducado
+SERVICIOS:
+  💼 Auditoría - 2500€`,
+  agregar: `■■ NUEVO CLIENTE ■■
+> Formulario de alta disponible en el panel web.
+> Use el formulario de contacto o acceda directamente
+  al módulo de gestión de clientes.`,
+  incidencias: `■■ INCIDENCIAS ACTIVAS ■■
+[#001] Empresa Ejemplo SL     🔴 ALTA    Puerto 445 SMB expuesto
+[#003] Comercial Norte CB     🟡 MEDIA   Certificado caducado
+Total activas: 2 | Resueltas hoy: 1`
+};
+
+function simularScript(outputId, accion) {
+  const area = document.getElementById(outputId);
+  area.innerHTML = 'Ejecutando script...\n';
+  setTimeout(() => {
+    area.textContent = OUTPUTS[accion] || '// Sin salida.';
+    area.scrollTop = area.scrollHeight;
+  }, 800);
+}
+</script>
 </body>
 </html>
 EOF
