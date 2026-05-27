@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IberoTech — Ciberseguridad Empresarial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --azul:       #0d2a4a;
+      --azul-med:   #1e3a5f;
+      --azul-claro: #2a5298;
+      --naranja:    #e8621a;
+      --naranja-cl: #f07a38;
+      --teal:       #2da8a0;
+      --gris:       #f4f6f9;
+      --texto:      #1a1a2e;
+    }
+    * { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--texto); background: #fff; }
+    h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+
+    /* ── Navbar ── */
+    .navbar { background: var(--azul); padding: 14px 0; }
+    .navbar-brand { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff !important; }
+    .navbar-brand span { color: var(--naranja); }
+    .nav-link { color: rgba(255,255,255,.8) !important; font-weight: 500; transition: color .2s; }
+    .nav-link:hover { color: var(--naranja) !important; }
+    .btn-login { background: var(--naranja); color: #fff !important; border-radius: 6px; padding: 6px 18px; font-weight: 600; transition: background .2s; }
+    .btn-login:hover { background: var(--naranja-cl); }
+
+    /* ── Hero ── */
+    #hero {
+      background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%);
+      min-height: 92vh; display: flex; align-items: center; position: relative; overflow: hidden;
+    }
+    #hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge { background: rgba(232,98,26,.15); border: 1px solid rgba(232,98,26,.4); color: var(--naranja-cl); border-radius: 50px; padding: 6px 16px; font-size: .85rem; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+    .hero-title { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; color: #fff; line-height: 1.15; }
+    .hero-title span { color: var(--naranja); }
+    .hero-sub { color: rgba(255,255,255,.7); font-size: 1.1rem; max-width: 520px; line-height: 1.7; }
+    .btn-hero { background: var(--naranja); color: #fff; border: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; transition: all .2s; }
+    .btn-hero:hover { background: var(--naranja-cl); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,98,26,.35); color: #fff; }
+    .btn-hero-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.4); padding: 13px 28px; border-radius: 8px; font-weight: 600; transition: all .2s; }
+    .btn-hero-outline:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,.08); }
+    .hero-stats { border-top: 1px solid rgba(255,255,255,.12); padding-top: 36px; margin-top: 36px; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; color: var(--naranja); }
+    .stat-label { color: rgba(255,255,255,.6); font-size: .85rem; }
+    .hero-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; padding: 28px; backdrop-filter: blur(12px); }
+    .hero-card-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); color: rgba(255,255,255,.85); font-size: .95rem; }
+    .hero-card-item:last-child { border: none; }
+    .hero-card-icon { width: 36px; height: 36px; background: rgba(232,98,26,.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--naranja-cl); font-size: 1rem; flex-shrink: 0; }
+
+    /* ── Sección genérica ── */
+    section { padding: 90px 0; }
+    .section-tag { font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--naranja); margin-bottom: 10px; }
+    .section-title { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 800; color: var(--azul); }
+    .section-sub { color: #6c757d; font-size: 1.05rem; max-width: 580px; }
+
+    /* ── Servicios ── */
+    #servicios { background: var(--gris); }
+    .srv-card { background: #fff; border-radius: 16px; padding: 36px 28px; height: 100%; border: 1px solid #e8ecf0; transition: all .25s; position: relative; overflow: hidden; }
+    .srv-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--azul-claro), var(--teal)); transform: scaleX(0); transition: transform .3s; transform-origin: left; }
+    .srv-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,.1); border-color: transparent; }
+    .srv-card:hover::before { transform: scaleX(1); }
+    .srv-icon { width: 56px; height: 56px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.5rem; margin-bottom: 20px; }
+    .srv-title { font-size: 1.2rem; font-weight: 700; color: var(--azul); margin-bottom: 10px; }
+    .srv-desc { color: #6c757d; font-size: .93rem; line-height: 1.6; margin-bottom: 20px; }
+    .srv-price { display: inline-flex; align-items: baseline; gap: 4px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; padding: 8px 16px; border-radius: 8px; }
+    .srv-price .amount { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; }
+    .srv-price .per { font-size: .8rem; opacity: .8; }
+    .srv-features { list-style: none; padding: 0; margin: 16px 0 0; }
+    .srv-features li { padding: 5px 0; font-size: .88rem; color: #555; display: flex; align-items: center; gap: 8px; }
+    .srv-features li i { color: var(--teal); font-size: .9rem; }
+
+    /* ── Nosotros ── */
+    .about-img-wrap { position: relative; }
+    .about-img-bg { width: 100%; height: 420px; background: linear-gradient(135deg, var(--azul) 0%, var(--teal) 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+    .about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--naranja); color: #fff; border-radius: 14px; padding: 18px 22px; font-family: 'Syne', sans-serif; }
+    .about-badge .num { font-size: 2rem; font-weight: 800; display: block; }
+    .about-badge .lbl { font-size: .8rem; opacity: .9; }
+    .about-check { display: flex; gap: 12px; margin-bottom: 14px; }
+    .about-check-icon { width: 24px; height: 24px; background: rgba(45,168,160,.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: .75rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* ── Contacto ── */
+    #contacto { background: var(--gris); }
+    .contact-card { background: #fff; border-radius: 20px; padding: 50px 44px; box-shadow: 0 4px 40px rgba(0,0,0,.07); }
+    .form-label { font-weight: 600; font-size: .88rem; color: var(--azul); margin-bottom: 6px; }
+    .form-control, .form-select { border: 1.5px solid #dde3ea; border-radius: 8px; padding: 11px 14px; font-size: .93rem; transition: border-color .2s, box-shadow .2s; }
+    .form-control:focus, .form-select:focus { border-color: var(--azul-claro); box-shadow: 0 0 0 3px rgba(42,82,152,.1); }
+    .btn-enviar { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border: none; padding: 13px 32px; border-radius: 8px; font-weight: 700; font-size: 1rem; width: 100%; transition: all .2s; }
+    .btn-enviar:hover { opacity: .9; transform: translateY(-1px); }
+    .contact-info-item { display: flex; gap: 14px; margin-bottom: 24px; }
+    .contact-info-icon { width: 44px; height: 44px; background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; }
+
+    /* ── Footer ── */
+    footer { background: var(--azul); color: rgba(255,255,255,.7); padding: 60px 0 30px; }
+    footer h5 { color: #fff; font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 18px; }
+    footer a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .9rem; display: block; margin-bottom: 8px; transition: color .2s; }
+    footer a:hover { color: var(--naranja); }
+    .footer-brand { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: #fff; }
+    .footer-brand span { color: var(--naranja); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.1); margin-top: 40px; padding-top: 24px; font-size: .85rem; }
+    .social-btn { width: 36px; height: 36px; background: rgba(255,255,255,.08); border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; color: rgba(255,255,255,.6); margin-right: 8px; transition: all .2s; }
+    .social-btn:hover { background: var(--naranja); color: #fff; }
+
+    /* ── Modal login ── */
+    .modal-header { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border-radius: 12px 12px 0 0; }
+    .modal-header .btn-close { filter: invert(1); }
+    .modal-content { border-radius: 14px; border: none; box-shadow: 0 20px 60px rgba(0,0,0,.2); }
+    .modal-title { font-family: 'Syne', sans-serif; font-weight: 700; }
+    .input-group-text { background: var(--gris); border-color: #dde3ea; color: var(--azul-claro); }
+    .btn-ingresar { background: linear-gradient(135deg, var(--azul) 0%, var(--azul-claro) 100%); color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; transition: opacity .2s; }
+    .btn-ingresar:hover { opacity: .9; color: #fff; }
+    .login-demo { background: var(--gris); border-radius: 8px; padding: 14px; font-size: .82rem; color: #666; }
+    .login-demo span { font-weight: 700; color: var(--azul); }
+
+    /* Animaciones */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { animation: fadeUp .6s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════ NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Ibero<span>Tech</span></a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <i class="bi bi-list text-white fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto gap-1 align-items-center">
+        <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+        <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+        <li class="nav-item ms-2">
+          <a class="nav-link btn-login" href="#" data-bs-toggle="modal" data-bs-target="#modalLogin">
+            <i class="bi bi-person-fill me-1"></i>Acceder
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ HERO -->
+<section id="inicio" style="padding:0;">
+  <div id="hero">
+    <div class="container position-relative">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="hero-badge fade-up"><i class="bi bi-shield-check me-2"></i>Empresa de Ciberseguridad · Mérida</div>
+          <h1 class="hero-title fade-up delay-1">Protegemos tu empresa en el <span>mundo digital</span></h1>
+          <p class="hero-sub mt-3 fade-up delay-2">Consultoría, auditoría y diseño de infraestructuras seguras para empresas que no pueden permitirse un fallo de seguridad.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4 fade-up delay-3">
+            <a href="#contacto" class="btn btn-hero">Solicitar servicio <i class="bi bi-arrow-right ms-1"></i></a>
+            <a href="#servicios" class="btn btn-hero-outline">Ver servicios</a>
+          </div>
+          <div class="row hero-stats fade-up delay-4">
+            <div class="col-4 text-center">
+              <div class="stat-num">+120</div>
+              <div class="stat-label">Clientes</div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="stat-num">+500</div>
+              <div class="stat-label">Auditorías</div>
+            </div>
+            <div class="col-4 text-center">
+              <div class="stat-num">99%</div>
+              <div class="stat-label">Satisfacción</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block fade-up delay-2">
+          <div class="hero-card">
+            <div class="mb-3 text-white-50" style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Servicios activos</div>
+            <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-clipboard2-data"></i></div>Consultoría de Seguridad Empresarial</div>
+            <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-search"></i></div>Auditoría y Análisis Forense</div>
+            <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-diagram-3"></i></div>Diseño de Infraestructuras Seguras</div>
+            <div class="hero-card-item"><div class="hero-card-icon"><i class="bi bi-bug"></i></div>Análisis de Vulnerabilidades</div>
+            <div class="mt-4 pt-3 border-top border-white border-opacity-10 d-flex align-items-center gap-3">
+              <div style="width:32px;height:32px;border-radius:50%;background:#4ade80;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;">✓</div>
+              <div class="text-white-50" style="font-size:.85rem;">Sede en Mérida · Extremadura · España</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag">Nuestros servicios</div>
+      <h2 class="section-title">¿Qué ofrecemos?</h2>
+      <p class="section-sub mx-auto mt-2">Soluciones de ciberseguridad adaptadas a cada empresa, desde la consultoría hasta la implementación completa.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3">
+        <div class="srv-card">
+          <div class="srv-icon"><i class="bi bi-clipboard2-data"></i></div>
+          <div class="srv-title">Consultoría</div>
+          <div class="srv-desc">Asesoramiento técnico y normativo para alinear tu empresa con los estándares de seguridad actuales.</div>
+          <ul class="srv-features">
+            <li><i class="bi bi-check-circle-fill"></i>Análisis de riesgos</li>
+            <li><i class="bi bi-check-circle-fill"></i>Cumplimiento normativo</li>
+            <li><i class="bi bi-check-circle-fill"></i>Plan de mejora</li>
+          </ul>
+          <div class="srv-price mt-auto"><span class="amount">1.200</span><span class="per">€ / proyecto</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="srv-card">
+          <div class="srv-icon"><i class="bi bi-search"></i></div>
+          <div class="srv-title">Auditoría</div>
+          <div class="srv-desc">Análisis y diagnóstico forense de tus sistemas para detectar vulnerabilidades antes que los atacantes.</div>
+          <ul class="srv-features">
+            <li><i class="bi bi-check-circle-fill"></i>Pentesting externo</li>
+            <li><i class="bi bi-check-circle-fill"></i>Análisis forense</li>
+            <li><i class="bi bi-check-circle-fill"></i>Informe detallado</li>
+          </ul>
+          <div class="srv-price mt-auto"><span class="amount">2.500</span><span class="per">€ / auditoría</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="srv-card">
+          <div class="srv-icon"><i class="bi bi-diagram-3"></i></div>
+          <div class="srv-title">Diseño</div>
+          <div class="srv-desc">Diseño e implementación de infraestructuras seguras desde cero, adaptadas a tu negocio.</div>
+          <ul class="srv-features">
+            <li><i class="bi bi-check-circle-fill"></i>Arquitectura segura</li>
+            <li><i class="bi bi-check-circle-fill"></i>Segmentación de redes</li>
+            <li><i class="bi bi-check-circle-fill"></i>Firewall y DMZ</li>
+          </ul>
+          <div class="srv-price mt-auto"><span class="amount">3.800</span><span class="per">€ / proyecto</span></div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3">
+        <div class="srv-card">
+          <div class="srv-icon"><i class="bi bi-bug"></i></div>
+          <div class="srv-title">Análisis</div>
+          <div class="srv-desc">Detección proactiva de vulnerabilidades en tus sistemas con herramientas especializadas.</div>
+          <ul class="srv-features">
+            <li><i class="bi bi-check-circle-fill"></i>Escaneo de puertos</li>
+            <li><i class="bi bi-check-circle-fill"></i>CVE scanning</li>
+            <li><i class="bi bi-check-circle-fill"></i>Recomendaciones</li>
+          </ul>
+          <div class="srv-price mt-auto"><span class="amount">900</span><span class="per">€ / análisis</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ NOSOTROS -->
+<section id="nosotros">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <div class="about-img-wrap">
+          <div class="about-img-bg">
+            <div class="text-center text-white px-4">
+              <i class="bi bi-shield-lock" style="font-size:5rem;opacity:.3;"></i>
+              <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-top:16px;opacity:.7;">IberoTech Security</div>
+              <div style="opacity:.5;font-size:.9rem;">Mérida, Extremadura</div>
+            </div>
+          </div>
+          <div class="about-badge">
+            <span class="num">5+</span>
+            <span class="lbl">Años de experiencia</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="section-tag">Sobre nosotros</div>
+        <h2 class="section-title">Expertos en ciberseguridad empresarial</h2>
+        <p class="text-muted mt-3 mb-4">Somos una empresa de ciberseguridad con sede en Mérida especializada en proteger a organizaciones de todos los tamaños frente a amenazas digitales.</p>
+        <div class="about-check"><div class="about-check-icon"><i class="bi bi-check"></i></div><div><strong>Equipo especializado</strong> — Profesionales certificados con experiencia en entornos reales.</div></div>
+        <div class="about-check"><div class="about-check-icon"><i class="bi bi-check"></i></div><div><strong>Metodología probada</strong> — Seguimos los estándares internacionales (ISO 27001, ENS).</div></div>
+        <div class="about-check"><div class="about-check-icon"><i class="bi bi-check"></i></div><div><strong>Atención personalizada</strong> — Cada cliente tiene un técnico responsable asignado.</div></div>
+        <div class="about-check"><div class="about-check-icon"><i class="bi bi-check"></i></div><div><strong>Sede local</strong> — Empresa extremeña comprometida con el tejido empresarial regional.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ CONTACTO -->
+<section id="contacto">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="section-tag">Contacto</div>
+      <h2 class="section-title">¿Hablamos?</h2>
+      <p class="section-sub mx-auto mt-2">Cuéntanos tu situación y te preparamos una propuesta sin compromiso.</p>
+    </div>
+    <div class="row g-5">
+      <div class="col-lg-7">
+        <div class="contact-card">
+          <form id="formContacto" onsubmit="enviarContacto(event)">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Nombre empresa <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c-empresa" placeholder="Nombre de tu empresa"pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Solo se permiten letras" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">CIF <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="c-cif" placeholder="B12345" pattern="[A-Za-z]{1}[0-9]{5}" maxlength="6" title="Debe empezar por una letra y contener 5 números" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-control" id="c-telefono" placeholder="600000000" pattern="[0-9]{9}" maxlength="9"title="El teléfono debe tener exactamente 9 números" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="c-email" placeholder="empresa@ejemplo.com" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Servicio de interés</label>
+                <select class="form-select" id="c-servicio">
+                  <option value="">Seleccionar servicio...</option>
+                  <option>Consultoría — 1.200 €</option>
+                  <option>Auditoría — 2.500 €</option>
+                  <option>Diseño de infraestructura — 3.800 €</option>
+                  <option>Análisis de vulnerabilidades — 900 €</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Mensaje <span class="text-danger">*</span></label>
+                <textarea class="form-control" id="c-mensaje" rows="4" placeholder="Cuéntanos tu situación..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-enviar"><i class="bi bi-send me-2"></i>Enviar solicitud</button>
+              </div>
+            </div>
+          </form>
+          <div id="contacto-ok" class="alert alert-success mt-3 d-none">
+            <i class="bi bi-check-circle me-2"></i><strong>¡Solicitud enviada!</strong> Te hemos mandado un correo de confirmación.
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+          <div><div style="font-weight:700;">Sede</div><div class="text-muted">Mérida, Extremadura, España</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="bi bi-envelope-fill"></i></div>
+          <div><div style="font-weight:700;">Email</div><div class="text-muted">contacto@iberotech.es</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="bi bi-telephone-fill"></i></div>
+          <div><div style="font-weight:700;">Teléfono</div><div class="text-muted">+34 924 000 000</div></div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon"><i class="bi bi-clock-fill"></i></div>
+          <div><div style="font-weight:700;">Horario</div><div class="text-muted">Lun–Vie: 8:00 – 18:00</div></div>
+        </div>
+        <div class="mt-4 p-4 rounded-3" style="background:linear-gradient(135deg,var(--azul),var(--teal));color:#fff;">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:8px;"><i class="bi bi-shield-check me-2"></i>¿Primera consulta?</div>
+          <div style="font-size:.9rem;opacity:.85;">La primera consulta es gratuita y sin compromiso.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-4">
+        <div class="footer-brand mb-3">Ibero<span>Tech</span></div>
+        <p style="font-size:.9rem;line-height:1.7;">Empresa de ciberseguridad con sede en Mérida, Extremadura. Protegemos tu empresa en el mundo digital.</p>
+        <div class="mt-3">
+          <a href="https://github.com/acastros03/alexandro-y-antonio-Proyecto-Final" class="social-btn" target="_blank"><i class="bi bi-github"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h5>Servicios</h5>
+        <a href="#servicios">Consultoría</a>
+        <a href="#servicios">Auditoría</a>
+        <a href="#servicios">Diseño</a>
+        <a href="#servicios">Análisis</a>
+      </div>
+      <div class="col-lg-2 col-6">
+        <h5>Empresa</h5>
+        <a href="#nosotros">Sobre nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="col-lg-4">
+        <h5>Contacto</h5>
+        <p style="font-size:.9rem;"><i class="bi bi-geo-alt me-2" style="color:var(--naranja);"></i>Mérida, Extremadura, España</p>
+        <p style="font-size:.9rem;"><i class="bi bi-envelope me-2" style="color:var(--naranja);"></i>contacto@iberotech.es</p>
+        <p style="font-size:.9rem;"><i class="bi bi-telephone me-2" style="color:var(--naranja);"></i>+34 924 000 000</p>
+      </div>
+    </div>
+    <div class="footer-bottom d-flex flex-wrap justify-content-between">
+      <span>IberoTech</span>
+      <span>Mérida, Extremadura · España</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════ MODAL LOGIN -->
+<div class="modal fade" id="modalLogin" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-shield-lock me-2"></i>Acceder a IberoTech</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <form onsubmit="login(event)">
+          <div class="mb-3">
+            <label class="form-label">Usuario</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person"></i></span>
+              <input type="text" class="form-control" id="login-user" placeholder="CIF" required/>
+            </div>
+          </div>
+          <div class="mb-4">
+            <label class="form-label">Contraseña</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock"></i></span>
+              <input type="password" class="form-control" id="login-pass" placeholder="Tu contraseña" required/>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-ingresar" id="btn-login">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Entrar
+          </button>
+        </form>
+        <div id="login-error" class="alert alert-danger mt-3 d-none">
+          <i class="bi bi-exclamation-triangle me-2"></i>Usuario o contraseña incorrectos.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── LOGIN — redirige a admin.php o cliente.php según el rol ──────────────────
+function login(e) {
+  e.preventDefault();
+  const user  = document.getElementById('login-user').value.trim();
+  const pass  = document.getElementById('login-pass').value;
+  const err   = document.getElementById('login-error');
+  const btn   = document.getElementById('btn-login');
+
+  err.classList.add('d-none');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Verificando...';
+
+  fetch('/api/login.php', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ nombre: user, password: pass })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      // Redirige según lo que devuelve el servidor
+      window.location.href = data.redirect;
+    } else {
+      throw new Error(data.error || 'Credenciales incorrectas');
+    }
+  })
+  .catch(ex => {
+    err.textContent = ex.message.includes('incorr') || ex.message.includes('401')
+      ? 'Usuario o contraseña incorrectos.'
+      : 'Error de conexión: ' + ex.message;
+    err.classList.remove('d-none');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-box-arrow-in-right me-2"></i>Entrar';
+  });
+}
+
+// ── FORMULARIO DE CONTACTO ────────────────────────────────────────────────────
+function enviarContacto(e) {
+  e.preventDefault();
+  const nombre   = document.getElementById('c-empresa').value.trim();
+  const cif      = document.getElementById('c-cif').value.trim();
+  const telefono = document.getElementById('c-telefono').value.trim();
+  const email    = document.getElementById('c-email').value.trim();
+
+  if (!nombre || !cif || !email) {
+    alert('Empresa, CIF y email son obligatorios.');
+    return;
+  }
+
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Enviando...';
+
+  fetch('/api/contacto.php', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ nombre, cif, telefono, email })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      document.getElementById('formContacto').style.display = 'none';
+      document.getElementById('contacto-ok').classList.remove('d-none');
+    } else {
+      throw new Error(data.error || 'Error desconocido');
+    }
+  })
+  .catch(ex => {
+    alert('Error: ' + ex.message);
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-send me-2"></i>Enviar solicitud';
+  });
+}
+</script>
+</body>
+</html>
