@@ -1,6 +1,5 @@
 # IberoTech — Documentación técnica
 ## Parte individual: Alexandro Castro Serrano
-**IES Albarregas · Mérida, Extremadura · 2025**
 
 ---
 
@@ -111,7 +110,7 @@ Cuando un visitante rellena el formulario de contacto de la web de IberoTech, el
 El visitante introduce su nombre, CIF, teléfono y email en el formulario de contacto de la web.
 
 **2. El formulario llama a la API**
-El JavaScript hace una petición POST a `/api/contacto.php` con los datos del formulario.
+Hace una petición POST a `/api/contacto.php` con los datos del formulario.
 
 **3. Se crea el usuario en la BD**
 El PHP comprueba que el CIF no existe ya, genera una contraseña aleatoria de 8 caracteres, la cifra con bcrypt y guarda el cliente en MariaDB.
@@ -138,4 +137,4 @@ AWS bloquea las conexiones SMTP directas desde instancias EC2 para evitar spam. 
 
 ---
 
-*IberoTech · IES Albarregas · Mérida, Extremadura · 2025*
+*IberoTech · IES Albarregas · Mérida, Extremadura · 2026*
