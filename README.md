@@ -29,7 +29,7 @@ IberoTech ofrece cuatro líneas de servicio:
 ## 🗂️ Módulos del Proyecto
 
 ### 🖥️ 1. Windows Server y Active Directory
-Dominio `IberoTech.es` con **5 Unidades Organizativas** (una por departamento), **6 grupos de seguridad**, perfiles móviles y **8 GPOs** de seguridad con justificación técnica.
+Dominio `labs-iberotech.ddns.net` con Unidades Organizativas, grupos de seguridad y GPOs de seguridad.
 
 - Horario de acceso restringido (07:00 – 18:00)
 - Bloquear Panel de control
@@ -37,7 +37,7 @@ Dominio `IberoTech.es` con **5 Unidades Organizativas** (una por departamento), 
 - Fondo corporativo
 
 ### 🗄️ 2. Base de Datos Relacional
-Modelo Entidad-Relación normalizado en **MariaDB** para gestionar departamentos, empleados, clientes, contratos e incidencias de ciberseguridad. Script DDL completo incluido.
+Modelo Entidad-Relación normalizado en **MariaDB** para gestionar departamentos, empleados, clientes, contratos e incidencias de ciberseguridad.
 
 ### 🌐 3. Servicios en Red — Arquitectura de 5 Capas
 Infraestructura de **alta disponibilidad** desplegada sobre Debian 12:
@@ -46,8 +46,8 @@ Infraestructura de **alta disponibilidad** desplegada sobre Debian 12:
 Internet → [Nginx LB] → [Apache x2] → [NFS] → [HAProxy] → [MariaDB Cluster]
 ```
 
-- **Nginx** como balanceador de carga con SSL/TLS y health checks automáticos
-- **Apache2** con redirección HTTP → HTTPS obligatoria
+- **Nginx** como balanceador de carga
+- **Apache2** con redirección HTTP
 - **NFS** como almacenamiento compartido entre nodos web
 - **HAProxy** como proxy SQL que protege el acceso directo a la BD
 - **Clúster MariaDB** con replicación Galera síncrona (cero pérdida de datos)
@@ -59,7 +59,6 @@ Apartados en el panel de cliente y de administrador en la página web:
 - Búsqueda de clientes en tiempo real por nombre o CIF
 - Alta de clientes con incidencia inicial simultánea
 - Gestión de incidencias por severidad (Crítica / Alta / Media / Baja)
-- Eliminación en cascada con integridad referencial
 - Autocompletado de precios desde catálogo de servicios
 - Resolver incidencias por parte de los administradores
 - Creación y eliminación de incidencias en el panel del cliente
