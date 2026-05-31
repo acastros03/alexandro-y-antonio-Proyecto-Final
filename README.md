@@ -31,35 +31,10 @@ IberoTech ofrece cuatro líneas de servicio:
 ### 🖥️ 1. Windows Server y Active Directory
 Dominio `IberoTech.es` con **5 Unidades Organizativas** (una por departamento), **6 grupos de seguridad**, perfiles móviles y **8 GPOs** de seguridad con justificación técnica.
 
-- GPO — ADMINISTRADOR DE DIRECTIVAS DE GRUPO
-Abre Herramientas → Administración de directivas de grupo
-
-- Crear GPO:
-- Click derecho en IberoTech.es → Crear GPO → nombre: GPO-Empleados
-Click derecho en GPO-Empleados → Editar
-- Dentro del editor ve a Configuración de usuario → Plantillas administrativas:
-  
-- Bloquear Panel de control:
-
-- Panel de control → doble click en Prohibir acceso al Panel de control y configuración de PC → Activado → Aceptar
-
-- Bloquear CMD:
-- Sistema → doble click en Impedir el acceso al símbolo del sistema → Activado → Aceptar
-
-- Fondo corporativo:
-- Escritorio → Escritorio activo → doble click en Tapiz de escritorio activo → Activado → en la ruta pon C:\Windows\Web\Wallpaper\Windows\img0.jpg → Aceptar
-
-- Vincular GPO a cada OU:
-- Click derecho en Depart_Informaticos → Vincular GPO existente → selecciona GPO-Empleados
-Repite con Depart_Financiero, Depart_Tecnico, Depart_Marketing, Depart_Juridico
-
-- Para aplicar en el cliente:
-- Cierra sesión y vuelve a entrar, o abre CMD como administrador y escribe gpupdate /force
-
-- Restricción de  CMD y Panel de Control para usuarios estándar
-- Bloqueo automático de pantalla tras inactividad
 - Horario de acceso restringido (07:00 – 18:00)
-- Acceso SSH a Linux exclusivo para el departamento de Informática
+- Bloquear Panel de control
+- Bloquear CMD
+- Fondo corporativo
 
 ### 🗄️ 2. Base de Datos Relacional
 Modelo Entidad-Relación normalizado en **MariaDB** para gestionar departamentos, empleados, clientes, contratos e incidencias de ciberseguridad. Script DDL completo incluido.
