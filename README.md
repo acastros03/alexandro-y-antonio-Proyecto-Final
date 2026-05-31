@@ -69,10 +69,10 @@ Apartados en el panel de cliente y de administrador en la página web:
 
 Herramientas para administrar las 5 capas desde un único punto:
 
-— Estado de todos los servidores.
-— Backup automatizado del clúster MariaDB al NFS
-— Actualizar la web de forma manual 
-— Ver logs de cada uno de los servidores 
+- Estado de todos los servidores.
+- Backup automatizado del clúster MariaDB al NFS
+- Actualizar la web de forma manual 
+- Ver logs de cada uno de los servidores 
 
 ---
 
