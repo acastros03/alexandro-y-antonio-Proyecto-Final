@@ -52,22 +52,27 @@ Internet → [Nginx LB] → [Apache x2] → [NFS] → [HAProxy] → [MariaDB Clu
 - **HAProxy** como proxy SQL que protege el acceso directo a la BD
 - **Clúster MariaDB** con replicación Galera síncrona (cero pérdida de datos)
 
-### 🐍 4. Aplicación Python — Gestor de Clientes e Incidencias
-Aplicación de escritorio con **interfaz gráfica Tkinter** para el personal técnico:
+### 🐍 4.Gestor de Clientes e Incidencias en aws
+
+Apartados en el panel de cliente y de administrador en la página web:
 
 - Búsqueda de clientes en tiempo real por nombre o CIF
 - Alta de clientes con incidencia inicial simultánea
 - Gestión de incidencias por severidad (Crítica / Alta / Media / Baja)
 - Eliminación en cascada con integridad referencial
 - Autocompletado de precios desde catálogo de servicios
-- Sin dependencias externas — solo Python estándar
+- Resolver incidencias por parte de los administradores
+- Creación y eliminación de incidencias en el panel del cliente
+- Descarga de aplicación de escaneo de puertos en el panel del cliente 
 
-### 🐧 5. Scripts Linux de Administración
-Herramientas Bash y Python para administrar las 5 capas desde un único punto:
+### 🐧 5. Scripts de Administración en la web con el panel del administrador 
 
-- `monitor_servicios.sh` — Estado de todos los servidores vía SSH
-- `backup_mariadb.sh` — Backup automatizado del clúster MariaDB al NFS
-- Panel gráfico Python/Tkinter de administración centralizada
+Herramientas para administrar las 5 capas desde un único punto:
+
+— Estado de todos los servidores.
+— Backup automatizado del clúster MariaDB al NFS
+— Actualizar la web de forma manual 
+— Ver logs de cada uno de los servidores 
 
 ---
 
@@ -80,10 +85,10 @@ Herramientas Bash y Python para administrar las 5 capas desde un único punto:
 | Servidores Web | Apache2, Nginx |
 | Base de Datos | MariaDB, HAProxy, Galera Cluster |
 | Almacenamiento | NFS Server |
-| Programación | Python 3, Tkinter, Bash |
+| Programación | Python 3, PhP, boostrap|
 | Simulación de Red | Cisco Packet Tracer |
-| Virtualización | Vagrant, VirtualBox |
+| Virtualización | AWS |
 
 ---
 
-*Proyecto Final — IES Albarregas · ASIR 2 · 2024/2025*
+*Proyecto Final — IES Albarregas · ASIR 2 · 2026*
