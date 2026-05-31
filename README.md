@@ -35,30 +35,26 @@ Dominio `IberoTech.es` con **5 Unidades Organizativas** (una por departamento), 
 Abre Herramientas → Administración de directivas de grupo
 
 - Crear GPO:
--- Click derecho en IberoTech.es → Crear GPO → nombre: GPO-Empleados
+- Click derecho en IberoTech.es → Crear GPO → nombre: GPO-Empleados
 Click derecho en GPO-Empleados → Editar
+- Dentro del editor ve a Configuración de usuario → Plantillas administrativas:
+  
+- Bloquear Panel de control:
 
--- Dentro del editor ve a Configuración de usuario → Plantillas administrativas:
-Bloquear Panel de control:
-
--- Panel de control → doble click en Prohibir acceso al Panel de control y configuración de PC → Activado → Aceptar
+- Panel de control → doble click en Prohibir acceso al Panel de control y configuración de PC → Activado → Aceptar
 
 - Bloquear CMD:
-
--- Sistema → doble click en Impedir el acceso al símbolo del sistema → Activado → Aceptar
+- Sistema → doble click en Impedir el acceso al símbolo del sistema → Activado → Aceptar
 
 - Fondo corporativo:
-
--- Escritorio → Escritorio activo → doble click en Tapiz de escritorio activo → Activado → en la ruta pon C:\Windows\Web\Wallpaper\Windows\img0.jpg → Aceptar
+- Escritorio → Escritorio activo → doble click en Tapiz de escritorio activo → Activado → en la ruta pon C:\Windows\Web\Wallpaper\Windows\img0.jpg → Aceptar
 
 - Vincular GPO a cada OU:
-
--- Click derecho en Depart_Informaticos → Vincular GPO existente → selecciona GPO-Empleados
+- Click derecho en Depart_Informaticos → Vincular GPO existente → selecciona GPO-Empleados
 Repite con Depart_Financiero, Depart_Tecnico, Depart_Marketing, Depart_Juridico
 
 - Para aplicar en el cliente:
-
--- Cierra sesión y vuelve a entrar, o abre CMD como administrador y escribe gpupdate /force
+- Cierra sesión y vuelve a entrar, o abre CMD como administrador y escribe gpupdate /force
 
 - Restricción de  CMD y Panel de Control para usuarios estándar
 - Bloqueo automático de pantalla tras inactividad
